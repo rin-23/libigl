@@ -385,9 +385,3 @@ IGL_INLINE void igl::blue_noise(typename DerivedS::Scalar radius,
         for (int j = 0; j < N; ++j) 
             S(i,j) = sample[i][j];
 }
-
-
-#ifdef IGL_STATIC_LIBRARY
-// Explicit template instantiation
-template void igl::blue_noise<unsigned int, Eigen::Matrix<double, -1, -1, 0, -1, -1>, Eigen::Matrix<double, -1, -1, 0, -1, -1>>(double, Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >&, Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >&, unsigned int, int, Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >&);                           
-#endif
