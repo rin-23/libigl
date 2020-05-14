@@ -18,10 +18,6 @@
 //TODO: reimplement bridsons code below using Eigen
 namespace bridson
 {
-    using std::min;
-    using std::max;
-    using std::swap;
-
     template<class T>
     inline T sqr(const T &x)
     { return x*x; }
@@ -59,7 +55,7 @@ namespace bridson
     template<class T>
     void erase_unordered_swap(std::vector<T> &a, unsigned int index)
     {
-        swap(a[index], a.back());
+        std::swap(a[index], a.back());
         a.pop_back();
     }
 
