@@ -5,15 +5,15 @@
 // v. 2.0. If a copy of the MPL was not distributed with this file, You can 
 // obtain one at http://mozilla.org/MPL/2.0/.
 
-#ifndef IGL_BLUE_NOISE_SAMPLE_H
-#define IGL_BLUE_NOISE_SAMPLE_H
+#ifndef IGL_BLUE_NOISE_H
+#define IGL_BLUE_NOISE_H
 
 #include "igl_inline.h"
 #include <Eigen/Core>
 
 namespace igl 
 {     
-  // BLUENOISE_SAMPLE generate samples from a blue noise distribution.
+  // BLUENOISE generate samples from a blue noise distribution.
   // based on Fast Poisson Disk Sampling in Arbitrary Dimensions by Robert Bridson
   // https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph07-poissondisk.pdf
   //
@@ -35,19 +35,19 @@ namespace igl
   // double radius = 0.1;
   // Vector3d xmin(-1,-1,-1), xmax(1,1,1); 
   // MatrixXd S;
-  // igl::bluenoise_sample<3>(radius, xmin, xmax, 0, 30, S);
+  // igl::blue_noise<3>(radius, xmin, xmax, 0, 30, S);
 
  template <unsigned int N, typename DerivedX, typename DerivedS>
- IGL_INLINE void blue_noise_sample(typename DerivedS::Scalar radius, 
-                                   const Eigen::PlainObjectBase<DerivedX>& xmin,  
-                                   const Eigen::PlainObjectBase<DerivedX>& xmax,  
-                                   unsigned int seed, 
-                                   int max_sample_attempts, 
-                                   Eigen::PlainObjectBase<DerivedS>& S);
+ IGL_INLINE void blue_noise(typename DerivedS::Scalar radius, 
+                            const Eigen::PlainObjectBase<DerivedX>& xmin,  
+                            const Eigen::PlainObjectBase<DerivedX>& xmax,  
+                            unsigned int seed, 
+                            int max_sample_attempts, 
+                            Eigen::PlainObjectBase<DerivedS>& S);
 }
 
 #ifndef IGL_STATIC_LIBRARY
-#  include "blue_noise_sample.cpp"
+#  include "blue_noise.cpp"
 #endif
 
 #endif

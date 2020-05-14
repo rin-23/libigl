@@ -6,7 +6,7 @@
 // v. 2.0. If a copy of the MPL was not distributed with this file, You can 
 // obtain one at http://mozilla.org/MPL/2.0/.
 
-#include "blue_noise_sample.h"
+#include "blue_noise.h"
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -372,12 +372,12 @@ namespace bridson
 namespace igl 
 {    
     template <unsigned int N, typename DerivedX, typename DerivedS>
-    IGL_INLINE void blue_noise_sample(typename DerivedS::Scalar radius, 
-                                      const Eigen::PlainObjectBase<DerivedX>& xmin,  
-                                      const Eigen::PlainObjectBase<DerivedX>& xmax, 
-                                      unsigned int seed, 
-                                      int max_sample_attempts, 
-                                      Eigen::PlainObjectBase<DerivedS>& S)
+    IGL_INLINE void blue_noise(typename DerivedS::Scalar radius, 
+                               const Eigen::PlainObjectBase<DerivedX>& xmin,  
+                               const Eigen::PlainObjectBase<DerivedX>& xmax, 
+                               unsigned int seed, 
+                               int max_sample_attempts, 
+                               Eigen::PlainObjectBase<DerivedS>& S)
     {
         assert(N > 0 && "dimension must be positive");
         assert(radius > 0 && "radius must be positive");
@@ -389,11 +389,16 @@ namespace igl
         typedef typename DerivedS::Scalar Scalar;
         using namespace bridson;
 
-        Vec<N,Scalar> xmin2(xmin(0),xmin(1),xmin(2));
-        Vec<N,Scalar> xmax2(xmax(0),xmax(1),xmax(2));
+        Vec<N,Scalar> xmin2;
+        Vec<N,Scalar> xmax2;
+        for (int i=0; i < N; ++i) 
+        {
+            xmin2[i] = xmin(i);
+            xmax2[i] = xmax(i);
+        }
+
         std::vector<Vec<N,Scalar>> sample;
         bluenoise_sample(radius, xmin2, xmax2, sample, seed, max_sample_attempts);
-
 
         S.resize(sample.size(), N);
         for (int i = 0; i < sample.size(); ++i) 
