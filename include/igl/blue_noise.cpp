@@ -100,24 +100,6 @@ namespace bridson
             v[0]=v0; v[1]=v1; v[2]=v2;
         }
 
-        Vec<N,T>(T v0, T v1, T v2, T v3)
-        {
-            assert(N==4);
-            v[0]=v0; v[1]=v1; v[2]=v2; v[3]=v3;
-        }
-
-        Vec<N,T>(T v0, T v1, T v2, T v3, T v4)
-        {
-            assert(N==5);
-            v[0]=v0; v[1]=v1; v[2]=v2; v[3]=v3; v[4]=v4;
-        }
-
-            Vec<N,T>(T v0, T v1, T v2, T v3, T v4, T v5)
-        {
-            assert(N==6);
-            v[0]=v0; v[1]=v1; v[2]=v2; v[3]=v3; v[4]=v4; v[5]=v5;
-        }
-
         T &operator[](int index)
         {
             assert(0<=index && (unsigned int)index<N);
