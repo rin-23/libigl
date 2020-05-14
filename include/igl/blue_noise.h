@@ -13,7 +13,7 @@
 
 namespace igl 
 {     
-  // BLUENOISE generate samples from a blue noise distribution.
+  // BLUENOISE generate samples in N dimensional space from a blue noise distribution.
   // based on Fast Poisson Disk Sampling in Arbitrary Dimensions by Robert Bridson
   // https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph07-poissondisk.pdf
   //
@@ -31,7 +31,7 @@ namespace igl
   // Output:
   //  S #samples by N matrix of samples
   //
-  // Example: How to sample a uniform cube?
+  // Example: How to sample a unit cube?
   // double radius = 0.1;
   // Vector3d xmin(-1,-1,-1), xmax(1,1,1); 
   // MatrixXd S;
