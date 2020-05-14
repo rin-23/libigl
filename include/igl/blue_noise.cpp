@@ -351,40 +351,43 @@ namespace bridson
     }
 }
 
-namespace igl 
-{    
-    template <unsigned int N, typename DerivedX, typename DerivedS>
-    IGL_INLINE void blue_noise(typename DerivedS::Scalar radius, 
-                               const Eigen::PlainObjectBase<DerivedX>& xmin,  
-                               const Eigen::PlainObjectBase<DerivedX>& xmax, 
-                               unsigned int seed, 
-                               int max_sample_attempts, 
-                               Eigen::PlainObjectBase<DerivedS>& S)
+template <unsigned int N, typename DerivedX, typename DerivedS>
+IGL_INLINE void igl::blue_noise(typename DerivedS::Scalar radius, 
+                                const Eigen::PlainObjectBase<DerivedX>& xmin,  
+                                const Eigen::PlainObjectBase<DerivedX>& xmax, 
+                                unsigned int seed, 
+                                int max_sample_attempts, 
+                                Eigen::PlainObjectBase<DerivedS>& S)
+{
+    assert(N > 0 && "dimension must be positive");
+    assert(radius > 0 && "radius must be positive");
+    assert(xmin.size() == N &&  xmax.size() == N && "invalid extent of the sample domain");
+
+    if (N <= 0 || radius <= 0 || xmin.size() != N || xmax.size() != N)
+        return;
+
+    typedef typename DerivedS::Scalar Scalar;
+    using namespace bridson;
+
+    Vec<N,Scalar> xmin2;
+    Vec<N,Scalar> xmax2;
+    for (int i=0; i < N; ++i) 
     {
-        assert(N > 0 && "dimension must be positive");
-        assert(radius > 0 && "radius must be positive");
-        assert(xmin.size() == N &&  xmax.size() == N && "invalid extent of the sample domain");
-
-        if (N <= 0 || radius <= 0 || xmin.size() != N || xmax.size() != N)
-            return;
-
-        typedef typename DerivedS::Scalar Scalar;
-        using namespace bridson;
-
-        Vec<N,Scalar> xmin2;
-        Vec<N,Scalar> xmax2;
-        for (int i=0; i < N; ++i) 
-        {
-            xmin2[i] = xmin(i);
-            xmax2[i] = xmax(i);
-        }
-
-        std::vector<Vec<N,Scalar>> sample;
-        bluenoise_sample(radius, xmin2, xmax2, sample, seed, max_sample_attempts);
-
-        S.resize(sample.size(), N);
-        for (int i = 0; i < sample.size(); ++i) 
-            for (int j = 0; j < N; ++j) 
-                S(i,j) = sample[i][j];
+        xmin2[i] = xmin(i);
+        xmax2[i] = xmax(i);
     }
+
+    std::vector<Vec<N,Scalar>> sample;
+    bluenoise_sample(radius, xmin2, xmax2, sample, seed, max_sample_attempts);
+
+    S.resize(sample.size(), N);
+    for (int i = 0; i < sample.size(); ++i) 
+        for (int j = 0; j < N; ++j) 
+            S(i,j) = sample[i][j];
 }
+
+
+#ifdef IGL_STATIC_LIBRARY
+// Explicit template instantiation
+template void igl::blue_noise<unsigned int, Eigen::Matrix<double, -1, -1, 0, -1, -1>, Eigen::Matrix<double, -1, -1, 0, -1, -1>>(double, Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >&, Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >&, unsigned int, int, Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >&);                           
+#endif
