@@ -23,7 +23,7 @@ namespace igl
   // Inputs:
   //   N dimension of the sample domain
   //   radius minimum distance between samples
-  //   xmin, xmax extent of the sample domain
+  //   xmin, xmax N by 1 vectors specifying extent of the sample domain
   //   seed random seed
   //   max_sample_attempts limit of samples to choose before rejection in the algorithm, default value is 30
   //  
